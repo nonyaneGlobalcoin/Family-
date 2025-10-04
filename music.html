@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Family Tree Music</title>
+  <style>
+    html,body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      max-width: 800px;
+      width: 90%;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header i {
+      font-size: 42px;
+      color: #38bdf8;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    audio {
+      width: 100%;
+      max-width: 500px;
+      outline: none;
+      border-radius: 12px;
+      background-color: rgba(255,255,255,0.08);
+    }
+
+    p {
+      color: #cbd5e1;
+      font-size: 1rem;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <i class="fas fa-music"></i>
+      <h1>Family Tree Music</h1>
+    </div>
+
+    <p>Now playing: Cassper Nyovest — Family Tree Vibes</p>
+
+    <audio id="musicPlayer" src="cass.mp3" controls autoplay></audio>
+  </div>
+
+  <script>
+    // Ensure autoplay works after user interaction (for browsers that block it)
+    const audio = document.getElementById('musicPlayer');
+    document.addEventListener('click', () => audio.play(), { once: true });
+  </script>
+</body>
+</html>
