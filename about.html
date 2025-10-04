@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Family Tree</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      background: rgba(255,255,255,0.05);
+      width: 100%;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    header img {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      color: #38bdf8;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    main {
+      max-width: 900px;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .bio-section {
+      background: rgba(255,255,255,0.08);
+      padding: 24px;
+      border-radius: 16px;
+      line-height: 1.6;
+      font-size: 1rem;
+      color: #cbd5e1;
+      text-align: justify;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .owner {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .owner img {
+      width: 160px;
+      height: 160px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .owner h2 {
+      font-size: 1.8rem;
+      margin: 0;
+      color: #fff;
+    }
+
+    .owner small {
+      color: #9ca3af;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      .owner img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="fam.png" alt="Family Tree Logo">
+    <h1>Family Tree</h1>
+  </header>
+
+  <main>
+    <div class="owner">
+      <img src="cassper.jpg" alt="Cassper Nyovest">
+      <div>
+        <h2>Cassper Nyovest</h2>
+        <small>Founder & Owner of Family Tree Records</small>
+      </div>
+    </div>
+
+    <div class="bio-section">
+      <p><strong>Refiloe Maele Phoolo</strong> (born 16 December 1990), professionally known as <strong>Cassper Nyovest</strong>, is a South African rapper, songwriter, entrepreneur, record producer, and amateur boxer. Born and raised in Mahikeng, North West, he is regarded as one of the most successful artists in South Africa. In 2014, he established his own record label, <strong>Family Tree Records</strong>.</p>
+
+      <p>Nyovest rose to fame with the release of his debut studio album, <em>Tsholofelo</em> (2014), which produced the hit singles “Gusheshe” and “Doc Shebeleza.” With his success of selling out tickets for his concert, <strong>Fill Up the Dome</strong> (2015), held at Ticketpro Dome in Johannesburg, he went on to inspire a national movement of self-produced stadium concerts. He later hosted sold-out shows at Orlando Stadium (2016), FNB Stadium (2017), Moses Mabhida Stadium (2018), and Royal Bafokeng Stadium (2019).</p>
+
+      <p>In 2015, Cassper released his eponymous studio album, <em>Refiloe</em>, during his Fill Up The Dome concert, featuring collaborations with The Game, DJ Drama, Stonebwoy, and Casey Veggies. He followed up with the critically acclaimed <em>Thuto</em> (2018) and his Kwaito-inspired <em>Sweet and Short</em> (2019).</p>
+
+      <p>Refiloe Maele Phoolo was born in Mafikeng to Muzuki and Letsebela Phoolo. He has a sister named Tsholofelo Phoolo and had a brother, Khotso Phoolo, who passed away in 2003. Cassper attended Sol Plaatjie Secondary School, where he began rapping at the age of 12. After leaving school in 2007, he moved to Johannesburg in 2008 to pursue his musical dreams full-time—a decision that led to his rise as one of Africa’s most influential artists.</p>
+    </div>
+  </main>
+</body>
+</html>
