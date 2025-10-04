@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Family Tree Music</title>
   <style>
-    html,body {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -22,7 +22,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 40px;
+      gap: 25px;
       max-width: 800px;
       width: 90%;
     }
@@ -42,6 +42,45 @@
       font-size: 2.2rem;
       margin: 0;
       text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    input[type="text"] {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-align: center;
+    }
+
+    input[type="text"]::placeholder {
+      color: #94a3b8;
+    }
+
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .song {
+      background: rgba(255,255,255,0.08);
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      width: 100%;
+    }
+
+    .song:hover {
+      background: rgba(255,255,255,0.15);
     }
 
     audio {
@@ -66,15 +105,58 @@
       <h1>Family Tree Music</h1>
     </div>
 
-    <p>Now playing: Cassper Nyovest — Family Tree Vibes</p>
+    <input type="text" id="searchBar" placeholder="Search for a song..." />
 
-    <audio id="musicPlayer" src="cass(128k).m4a" controls autoplay></audio>
+    <div class="song-list" id="songList"></div>
+
+    <p id="nowPlaying">Now playing: Cassper Nyovest — Family Tree Vibes</p>
+    <audio id="musicPlayer" src="cass.mp3" controls autoplay></audio>
   </div>
 
   <script>
-    // Ensure autoplay works after user interaction (for browsers that block it)
-    const audio = document.getElementById('musicPlayer');
-    document.addEventListener('click', () => audio.play(), { once: true });
+    // Songs library
+    const songs = [
+      { name: "Family Tree Vibes", file: "cass.mp3" },
+      { name: "Doc Shebeleza", file: "doc_shebeleza.mp3" },
+      { name: "Tito Mboweni", file: "cass.mp3" },
+      { name: "Malome", file: "malome.mp3" },
+    ];
+
+    const searchBar = document.getElementById('searchBar');
+    const songList = document.getElementById('songList');
+    const musicPlayer = document.getElementById('musicPlayer');
+    const nowPlaying = document.getElementById('nowPlaying');
+
+    // Display all songs initially
+    function displaySongs(filteredSongs = songs) {
+      songList.innerHTML = '';
+      filteredSongs.forEach(song => {
+        const div = document.createElement('div');
+        div.classList.add('song');
+        div.textContent = song.name;
+        div.onclick = () => playSong(song);
+        songList.appendChild(div);
+      });
+    }
+
+    function playSong(song) {
+      musicPlayer.src = song.file;
+      nowPlaying.textContent = "Now playing: " + song.name;
+      musicPlayer.play();
+    }
+
+    // Filter songs by search input
+    searchBar.addEventListener('input', () => {
+      const query = searchBar.value.toLowerCase();
+      const filtered = songs.filter(song => song.name.toLowerCase().includes(query));
+      displaySongs(filtered);
+    });
+
+    // Display all on load
+    displaySongs();
+
+    // Fix autoplay block (only after interaction)
+    document.addEventListener('click', () => musicPlayer.play(), { once: true });
   </script>
 </body>
 </html>
