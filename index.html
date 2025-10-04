@@ -1,0 +1,123 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loading — South African Greetings</title>
+  <style>
+    :root{
+      --size: 360px;
+      --duration: 3.6s; /* rotation speed */
+    }
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    .stage{
+      height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0f172a 0%, #071025 100%);color:#fff;
+      overflow:hidden;padding:20px;box-sizing:border-box
+    }
+    .loader-wrap{position:relative;width:var(--size);height:var(--size);display:flex;align-items:center;justify-content:center}/* central picture */
+.center-pic{
+  width:120px;height:120px;border-radius:999px;overflow:hidden;z-index:30;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff0,#ffffff10);
+  box-shadow:0 8px 30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.02);backdrop-filter:blur(4px);
+}
+.center-pic img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* the circular rail holding greetings */
+.circle{
+  position:absolute;inset:0;border-radius:50%;display:block;align-items:center;justify-content:center;pointer-events:none;
+  animation:spin var(--duration) linear infinite;
+  z-index:10;
+}
+/* pause rotation when hovering */
+.circle:hover{animation-play-state:paused}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.circle .item{
+  --angle:0deg;
+  position:absolute;left:50%;top:50%;transform-origin:0 -140px; /* we'll move items outward */
+  transform:rotate(var(--angle)) translate(-50%,-50%) translateY(-140px) rotate(calc(-1 * var(--angle)));
+  white-space:nowrap;font-weight:600;font-size:16px;letter-spacing:0.4px;background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);
+  backdrop-filter:blur(2px);
+}
+
+/* subtle glow for better contrast */
+.circle .item span{display:inline-block;padding:2px 6px;border-radius:6px}
+
+/* small footer countdown */
+.countdown{position:fixed;left:50%;transform:translateX(-50%);bottom:28px;color:#cbd5e1;font-size:14px;opacity:.95}
+
+/* responsive tweaks */
+@media (max-width:420px){:root{--size:300px} .center-pic{width:96px;height:96px} .circle .item{font-size:14px}}
+
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="loader-wrap" role="img" aria-label="Loading — greetings in South African languages">
+      <div class="circle" id="greetCircle" aria-hidden="false">
+        <!-- Items will be injected by JS -->
+      </div><div class="center-pic" title="Click to skip">
+    <!-- Replace the src with your picture path or data URI -->
+    <img src="https://images.unsplash.com/photo-1558981403-c5f9896b4b6d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="center picture">
+  </div>
+</div>
+
+  </div>  <div class="countdown" id="countdown">Redirecting in 18s — loading greetings…</div>  <script>
+    // List of the 11 official South African languages and a common greeting for each.
+    // Sources: language phrase references (e.g., Omniglot, language guides).
+    const greetings = [
+      {lang: 'English', text: 'Hello'},
+      {lang: 'Afrikaans', text: 'Hallo'},
+      {lang: 'isiZulu', text: 'Sawubona'},
+      {lang: 'isiXhosa', text: 'Molo'},
+      {lang: 'Sepedi (Northern Sotho)', text: 'Dumela'},
+      {lang: 'Sesotho (Southern Sotho)', text: 'Lumela'},
+      {lang: 'Setswana', text: 'Dumela'},
+      {lang: 'siSwati', text: 'Sawubona'},
+      {lang: 'Xitsonga', text: 'Xewani'},
+      {lang: 'Tshivenda', text: 'Ndaa'},
+      {lang: 'isiNdebele', text: 'Lotjhani'}
+    ];
+
+    const circle = document.getElementById('greetCircle');
+
+    // create items and place them evenly around the circle
+    const count = greetings.length;
+    greetings.forEach((g,i)=>{
+      const el = document.createElement('div');
+      el.className = 'item';
+      const angle = (360 / count) * i; // degrees
+      el.style.setProperty('--angle', angle + 'deg');
+      // show language short then greeting
+      el.innerHTML = `<span title="${g.lang}">${g.text}</span>`;
+      circle.appendChild(el);
+    });
+
+    // redirect after 18 seconds
+    const redirectAfter = 18 * 1000; // ms
+    const countdownEl = document.getElementById('countdown');
+    let remaining = Math.ceil(redirectAfter/1000);
+
+    const interval = setInterval(()=>{
+      remaining -= 1;
+      if(remaining <= 0) remaining = 0;
+      countdownEl.textContent = `Redirecting in ${remaining}s — loading greetings…`;
+      if(remaining === 0){ clearInterval(interval); }
+    },1000);
+
+    // Do the redirect exactly after the timeout
+    setTimeout(()=>{
+      // try to navigate to fam.html in the same folder
+      window.location.href = 'fam.html';
+    }, redirectAfter);
+
+    // allow click on center picture to skip immediately
+    document.querySelector('.center-pic').addEventListener('click', ()=>{
+      window.location.href = 'fam.html';
+    });
+
+    // Accessibility: allow Enter key to skip
+    document.addEventListener('keydown', e=>{ if(e.key === 'Enter') window.location.href = 'fam.html'; });
+  </script></body>
+</html>
