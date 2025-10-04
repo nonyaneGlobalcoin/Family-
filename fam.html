@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fam — Welcome</title>
+  <style>
+    html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#fff}
+    body::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1}video.bg-video{
+  position:fixed;right:0;bottom:0;min-width:100%;min-height:100%;object-fit:cover;z-index:0;
+}
+
+.content{
+  position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:40px;
+}
+
+h1{font-size:2.5rem;letter-spacing:1px;text-shadow:0 4px 12px rgba(0,0,0,0.6)}
+
+.icons{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:40px;max-width:700px;width:90%;
+}
+.icon{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;background:rgba(255,255,255,0.08);border-radius:18px;backdrop-filter:blur(6px);transition:all .3s ease;cursor:pointer;text-decoration:none;color:#fff
+}
+.icon:hover{background:rgba(255,255,255,0.15);transform:translateY(-4px);}
+.icon i{font-size:36px;}
+.icon span{font-size:18px;font-weight:600;}
+
+@media (max-width:600px){h1{font-size:1.8rem}.icons{gap:20px}.icon{padding:16px}}
+
+  </style>
+  <!-- fontawesome icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- background video -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Cass.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>  <div class="content">
+    <h1>Welcome to Our Fam</h1><div class="icons">
+  <a href="#music" class="icon" title="Our Music">
+    <i class="fas fa-music"></i>
+    <span>Our Music</span>
+  </a>
+  <a href="#artists" class="icon" title="Our Artists">
+    <i class="fas fa-user-friends"></i>
+    <span>Our Artists</span>
+  </a>
+  <a href="#clothing" class="icon" title="Our Clothing Store">
+    <i class="fas fa-tshirt"></i>
+    <span>Our Clothing Store</span>
+  </a>
+  <a href="#updates" class="icon" title="Performance Updates">
+    <i class="fas fa-calendar-alt"></i>
+    <span>Performance Updates</span>
+  </a>
+</div>
+
+  </div>
+</body>
+</html>
