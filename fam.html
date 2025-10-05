@@ -1,41 +1,81 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Family Tree — Welcome</title>
   <style>
-    html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#fff}
-    body::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1}
+    html,body{
+      margin:0;height:100%;overflow:hidden;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      color:#fff;
+    }
+    body::before{
+      content:'';position:fixed;inset:0;
+      background:rgba(0,0,0,0.5);z-index:1;
+    }
     video.bg-video{
-      position:fixed;right:0;bottom:0;min-width:100%;min-height:100%;object-fit:cover;z-index:0;
-    }.content{
-  position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:40px;
-}
-
-h1{font-size:2.5rem;letter-spacing:1px;text-shadow:0 4px 12px rgba(0,0,0,0.6)}
-
-.icons{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:40px;max-width:700px;width:90%;
-}
-.icon{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;background:rgba(255,255,255,0.08);border-radius:18px;backdrop-filter:blur(6px);transition:all .3s ease;cursor:pointer;text-decoration:none;color:#fff
-}
-.icon:hover{background:rgba(255,255,255,0.15);transform:translateY(-4px);}
-.icon i{font-size:36px;}
-.icon span{font-size:18px;font-weight:600;}
-
-@media (max-width:600px){h1{font-size:1.8rem}.icons{gap:20px}.icon{padding:16px}}
-
+      position:fixed;right:0;bottom:0;
+      min-width:100%;min-height:100%;
+      object-fit:cover;z-index:0;
+    }
+    .content{
+      position:relative;z-index:2;height:100%;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;gap:40px;
+    }
+    h1{
+      font-size:2.5rem;letter-spacing:1px;
+      text-shadow:0 4px 12px rgba(0,0,0,0.6);
+    }
+    .icons{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:40px;max-width:700px;width:90%;
+    }
+    .icon{
+      display:flex;flex-direction:column;align-items:center;
+      justify-content:center;gap:12px;padding:20px;
+      background:rgba(255,255,255,0.08);
+      border-radius:18px;backdrop-filter:blur(6px);
+      transition:all .3s ease;cursor:pointer;
+      text-decoration:none;color:#fff;
+    }
+    .icon:hover{
+      background:rgba(255,255,255,0.15);
+      transform:translateY(-4px);
+    }
+    .icon i{font-size:36px;}
+    .icon span{font-size:18px;font-weight:600;}
+    .click-msg{
+      position:fixed;bottom:24px;left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,0.5);
+      padding:10px 20px;border-radius:12px;
+      color:#38bdf8;font-size:16px;
+      z-index:3;text-align:center;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{opacity:0.7;}
+      50%{opacity:1;}
+    }
+    @media (max-width:600px){
+      h1{font-size:1.8rem}
+      .icons{gap:20px}
+      .icon{padding:16px}
+    }
   </style>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <video autoplay muted loop playsinline class="bg-video">
+  <!-- Video background -->
+  <video id="bgVideo" muted loop playsinline class="bg-video">
     <source src="cass2.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+
+  <!-- Main content -->
   <div class="content">
     <h1>Welcome to Our Fam</h1>
     <div class="icons">
@@ -55,11 +95,30 @@ h1{font-size:2.5rem;letter-spacing:1px;text-shadow:0 4px 12px rgba(0,0,0,0.6)}
         <i class="fas fa-calendar-alt"></i>
         <span>Performance Updates</span>
       </a>
-      <a href="about.html" class="icon" title="Performance Updates">
-        <i class="fas fa-calendar-alt"></i>
-        <span>about the founders</span>
+      <a href="about.html" class="icon" title="About the Founders">
+        <i class="fas fa-info-circle"></i>
+        <span>About the Founders</span>
       </a>
     </div>
   </div>
+
+  <!-- Click message -->
+  <div class="click-msg" id="clickMsg">🎵 Click anywhere to enable sound</div>
+
+  <script>
+    const video = document.getElementById('bgVideo');
+    const clickMsg = document.getElementById('clickMsg');
+
+    // Ensure autoplay muted starts immediately
+    video.play().catch(() => console.log("Muted autoplay started"));
+
+    // Wait for user click to enable audio
+    document.addEventListener('click', () => {
+      video.muted = false;
+      video.play().catch(err => console.log("Playback error:", err));
+      clickMsg.textContent = "🎶 Sound enabled! Enjoy the vibes!";
+      setTimeout(() => clickMsg.remove(), 2500);
+    }, { once: true });
+  </script>
 </body>
-</html>
+        </html>
