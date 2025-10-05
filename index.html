@@ -7,7 +7,7 @@
   <style>
     :root {
       --size: 360px;
-      --duration: 3.6s; /* rotation speed */
+      --duration: 3.6s;
     }
     html, body {
       height: 100%;
@@ -24,6 +24,7 @@
       overflow: hidden;
       padding: 20px;
       box-sizing: border-box;
+      flex-direction: column;
     }
     .loader-wrap {
       position: relative;
@@ -33,7 +34,6 @@
       align-items: center;
       justify-content: center;
     }
-    /* central picture */
     .center-pic {
       width: 120px;
       height: 120px;
@@ -51,23 +51,15 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    /* the circular rail holding greetings */
     .circle {
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      display: block;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
       animation: spin var(--duration) linear infinite;
       z-index: 10;
     }
-    .circle:hover { animation-play-state: paused; }
-
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .circle .item {
@@ -88,7 +80,7 @@
       backdrop-filter: blur(2px);
     }
 
-    .circle .item span { display: inline-block; padding: 2px 6px; border-radius: 6px; }
+    .circle .item span { padding: 2px 6px; }
 
     .countdown {
       position: fixed;
@@ -98,6 +90,15 @@
       color: #cbd5e1;
       font-size: 14px;
       opacity: .95;
+      text-align: center;
+    }
+
+    .click-msg {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #38bdf8;
+      opacity: 0.9;
+      text-align: center;
     }
 
     @media (max-width:420px) {
@@ -109,21 +110,23 @@
 </head>
 <body>
   <!-- background music -->
-  <audio id="bgMusic" src="cass(128k).m4a" autoplay loop></audio>
+  <audio id="bgMusic" src="cass(128k).m4a" loop></audio>
 
   <div class="stage">
     <div class="loader-wrap" role="img" aria-label="Loading — greetings in South African languages">
-      <div class="circle" id="greetCircle" aria-hidden="false"></div>
+      <div class="circle" id="greetCircle"></div>
       <div class="center-pic" title="Click to skip">
         <img src="fam.jpg" alt="center picture">
       </div>
     </div>
+
+    <div class="click-msg" id="clickMessage">🎵 Click anywhere to start music & loading...</div>
   </div>
 
-  <div class="countdown" id="countdown">click screen and increase volume - Redirecting in 18s — loading greetings…</div>
+  <div class="countdown" id="countdown">Redirecting in 18s — loading greetings…</div>
 
   <script>
-    // greetings in 11 official South African languages
+    // greetings list
     const greetings = [
       {lang: 'English', text: 'Hello'},
       {lang: 'Afrikaans', text: 'Hallo'},
@@ -139,44 +142,50 @@
     ];
 
     const circle = document.getElementById('greetCircle');
+    const audio = document.getElementById('bgMusic');
+    const clickMsg = document.getElementById('clickMessage');
+
+    // create rotating greetings
     const count = greetings.length;
     greetings.forEach((g, i) => {
       const el = document.createElement('div');
       el.className = 'item';
       const angle = (360 / count) * i;
       el.style.setProperty('--angle', angle + 'deg');
-      el.innerHTML = `<span title=\"${g.lang}\">${g.text}</span>`;
+      el.innerHTML = `<span title="${g.lang}">${g.text}</span>`;
       circle.appendChild(el);
     });
 
-    // countdown and redirect
-    const redirectAfter = 18 * 1000;
-    const countdownEl = document.getElementById('countdown');
-    let remaining = Math.ceil(redirectAfter / 1000);
-    const interval = setInterval(() => {
-      remaining -= 1;
-      if (remaining <= 0) remaining = 0;
-      countdownEl.textContent = `Redirecting in ${remaining}s — loading greetings…`;
-      if (remaining === 0) clearInterval(interval);
-    }, 1000);
+    // play music after user click
+    let started = false;
+    document.addEventListener('click', () => {
+      if (!started) {
+        audio.volume = 0.6;
+        audio.play().catch(() => console.log("Autoplay blocked until user interaction"));
+        clickMsg.textContent = "🎶 Music playing... enjoy the greetings!";
+        started = true;
 
-    setTimeout(() => {
-      window.location.href = 'fam.html';
-    }, redirectAfter);
+        // start countdown only after click
+        const redirectAfter = 18 * 1000;
+        const countdownEl = document.getElementById('countdown');
+        let remaining = Math.ceil(redirectAfter / 1000);
+        const interval = setInterval(() => {
+          remaining -= 1;
+          if (remaining <= 0) remaining = 0;
+          countdownEl.textContent = `Redirecting in ${remaining}s — loading greetings…`;
+          if (remaining === 0) clearInterval(interval);
+        }, 1000);
 
-    // click to skip
-    document.querySelector('.center-pic').addEventListener('click', () => {
-      window.location.href = 'fam.html';
-    });
+        setTimeout(() => {
+          window.location.href = 'fam.html';
+        }, redirectAfter);
+      }
+    }, { once: true });
 
+    // allow Enter key to skip immediately
     document.addEventListener('keydown', e => {
       if (e.key === 'Enter') window.location.href = 'fam.html';
     });
-
-    // ensure music plays even if autoplay blocked
-    const audio = document.getElementById('bgMusic');
-    audio.volume = 0.6;
-    document.addEventListener('click', () => audio.play(), { once: true });
   </script>
 </body>
 </html>
